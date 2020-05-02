@@ -1,2 +1,7 @@
-﻿  main.cpp
-  My_game.vcxproj -> D:\Work\Programming\Game\My_game\Debug\My_game.exe
+﻿  entity.cpp
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(14,8): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(13,8): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(75,2): error C2059: синтаксическая ошибка: ,
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(77,1): error C2630: обнаружен ";" в списке с разделителем-запятой
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(77,1): error C2512: Entity: нет подходящего конструктора по умолчанию
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.h(6,7): message : см. объявление "Entity"
