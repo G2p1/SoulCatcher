@@ -4,12 +4,12 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    sf::RenderWindow window(sf::VideoMode(1980, 1080), "SFML window");
 
     sf::Clock clock;
     float time;
    
-    Player player ("player", 100, 100, "player_1.png", 115, 154);
+    Player* player = new Player("player", 100, 100, "player_1.png", 115, 154);
 
     Enemy enemy("enemy", 250, 250, "enemy_1.png", 233, 165);
 
@@ -27,11 +27,11 @@ int main()
                 window.close();
         }
 
-        player.update(window, time, event);
-        
+        player->update(window, time, event);
+        enemy.update(*player, time);
 
         window.clear(sf::Color(24, 145, 75));
-        window.draw(player.getSprite());
+        window.draw(player->getSprite());
         window.draw(enemy.getSprite());
         window.display();
     }

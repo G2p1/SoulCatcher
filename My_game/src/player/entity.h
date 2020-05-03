@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include <SFML/Graphics.hpp>
+#include "waepon/waepon.h"
 
 //Interface
 class Entity 
@@ -29,7 +30,7 @@ public:
 	sf::Sprite getSprite();
 
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
-	void eventUpdate(sf::RenderWindow& window, sf::Event& event);
+	void updateEvent(sf::RenderWindow& window, sf::Event& event);
 
 };
 
@@ -38,12 +39,16 @@ class Player : public Entity
 	bool m_sword;
 	bool m_bow;
 
+	Bow m_Bow;
+	Sword m_Sword;
+
 public:
 
 	Player(std::string name, float x, float y, std::string image, int w, int h);
 
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
-	void updateEvent(sf::Event& event);
+	void updateEvent(sf::RenderWindow& window, sf::Event& event);
+	void attack();
 };
 
 class Enemy : public Entity
@@ -53,7 +58,7 @@ class Enemy : public Entity
 public: 
 	Enemy(std::string name, float x, float y, std::string image, int w, int h);
 
-	void update();
+	void update(Player& player, float time);
 
 };
 

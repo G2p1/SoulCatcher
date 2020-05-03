@@ -27,6 +27,9 @@
     <ClCompile Include="src\camera\cmaera.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\player\waepon\waepon.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\player\entity.h">
@@ -36,6 +39,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\camera\camera.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player\waepon\waepon.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

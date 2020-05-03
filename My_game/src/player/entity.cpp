@@ -13,7 +13,6 @@ Entity::Entity(std::string name, float x, float y, std::string image, int w, int
 	, m_isSelect(false)
 	, m_h(h)
 	, m_w(w)
-
 {
 	m_image.loadFromFile(image);
 	m_texture.loadFromImage(m_image);
@@ -48,15 +47,15 @@ void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 {
 	float distance = 0;
 	
-	Entity::eventUpdate(window, event);
+	Entity::updateEvent(window, event);
 	if (m_isMove)
 	{
 		distance = sqrt((m_tempX - m_x) * (m_tempX - m_x) + (m_tempY - m_y) * (m_tempY - m_y));
 
 			if (distance > 2)
 			{
-				m_x += 0.1*time  * (m_tempX - m_x) / distance;
-				m_y += 0.1 *time * (m_tempY - m_y) / distance;
+				m_x += 0.3*time  * (m_tempX - m_x) / distance;
+				m_y += 0.3 *time * (m_tempY - m_y) / distance;
 			}
 	}
 
@@ -64,8 +63,9 @@ void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 
 }
 
-void Entity::eventUpdate(sf::RenderWindow& window, sf::Event& event)
+void Entity::updateEvent(sf::RenderWindow& window, sf::Event& event)
 {
+	
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
 	sf::Vector2f pos = window.mapPixelToCoords(pixelPos);
 	
@@ -106,22 +106,6 @@ void Entity::eventUpdate(sf::RenderWindow& window, sf::Event& event)
 		{
 			m_isMove = false;
 		}
-		if (event.type == sf::Event::KeyPressed)
-			if (event.key.code == sf::Keyboard::Q)
-			{
-				std::cout << "bow\n";
-				m_bow = true;
-				m_sword = false;
-			}
-
-		if (event.type == sf::Event::KeyPressed)
-			if (event.key.code == sf::Keyboard::W)
-			{
-				std::cout << "sword\n";
-				m_bow = false;
-				m_sword = true;
-			}
-
 	}
 }
 
@@ -131,6 +115,7 @@ Player::Player(std::string name, float x, float y, std::string image, int w, int
 	, m_bow(false)
 	, Entity(name, x, y, "src/player/Image/Player/" + image, w , h)
 	
+	
 {
 
 }
@@ -138,13 +123,38 @@ Player::Player(std::string name, float x, float y, std::string image, int w, int
 void Player::update(sf::RenderWindow& window, float time, sf::Event& event) 
 {
 	Entity::update(window, time, event);
-	updateEvent(event);
+	updateEvent(window, event);
 }
 
-void Player::updateEvent(sf::Event & event) {
+void Player::updateEvent(sf::RenderWindow& window, sf::Event& event)
+{
+	
 	if (m_life) {
 		
-		
+			if (event.key.code == sf::Keyboard::Q)
+			{
+				m_bow = true;
+				m_sword = false;
+			}
+
+			if (event.key.code == sf::Keyboard::W)
+			{
+				m_bow = false;
+				m_sword = true;
+			}
+
+	}
+}
+
+void Player::attack()
+{
+	if (m_bow)
+	{
+
+	}
+	if (m_sword)
+	{
+
 	}
 }
 
@@ -157,9 +167,19 @@ Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h
 
 }
 
-void Enemy::update() 
+void Enemy::update(Player& player,float time)
 {
+	m_tempX = player.getX();
+	m_tempY = player.getY();
+	float distance = sqrt((player.getX() - m_x)* (player.getX() - m_x) + (player.getY() - m_y)* (player.getY() - m_y));
+	if (distance < 1000)
+	{
+		isDetected = true;
+		m_x += 0.05 * time * (m_tempX - m_x) / distance;
+		m_y += 0.05 * time * (m_tempY - m_y) / distance;
+	}
 
+	m_sprite.setPosition(m_x, m_y);
 }
 
 //class Let
