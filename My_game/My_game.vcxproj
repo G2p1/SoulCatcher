@@ -135,10 +135,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera\cmaera.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\player\entity.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\camera\camera.h" />
+    <ClInclude Include="src\map\map.h" />
     <ClInclude Include="src\player\entity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
