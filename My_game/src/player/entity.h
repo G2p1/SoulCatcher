@@ -27,6 +27,8 @@ public:
 	
 	float getX();
 	float getY();
+	float getH();
+	float getW();
 	sf::Sprite getSprite();
 
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
@@ -59,7 +61,7 @@ public:
 	Enemy(std::string name, float x, float y, std::string image, int w, int h);
 
 	void update(Player& player, float time);
-
+	void colision(Player& pleyer);
 };
 
 class Let : public Entity
@@ -69,4 +71,7 @@ class Let : public Entity
 public:
 
 	Let(std::string name, float x, float y, std::string image, int w, int h);
+
+	sf::Sprite getSprite();
+	void colision(Player& player);
 };

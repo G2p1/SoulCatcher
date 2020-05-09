@@ -43,6 +43,8 @@ sf::Sprite Entity::getSprite()
 	return m_sprite;
 }
 
+
+
 void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 {
 	float distance = 0;
@@ -109,6 +111,15 @@ void Entity::updateEvent(sf::RenderWindow& window, sf::Event& event)
 	}
 }
 
+float Entity::getW()
+{
+	return m_w;
+}
+
+float Entity::getH()
+{
+	return m_h;
+}
 //class Player
 Player::Player(std::string name, float x, float y, std::string image, int w, int h)
 	: m_sword(false)
@@ -169,6 +180,7 @@ Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h
 
 void Enemy::update(Player& player,float time)
 {
+	colision(player);
 	m_tempX = player.getX();
 	m_tempY = player.getY();
 	float distance = sqrt((player.getX() - m_x)* (player.getX() - m_x) + (player.getY() - m_y)* (player.getY() - m_y));
@@ -182,11 +194,166 @@ void Enemy::update(Player& player,float time)
 	m_sprite.setPosition(m_x, m_y);
 }
 
+void Enemy::colision(Player& player)
+{
+	if (
+		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() && m_y + m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() && m_y - m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() + (player.getW() / 4) <= m_x - (m_w / 2)
+		)
+		player.setCoordinates(
+								 player.getX() - 1
+								, player.getY()
+								);
+
+	else if (
+		player.getX() - (player.getW() / 2)  <= m_x + (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2  < player.getY() + player.getH()-20 && m_y + m_h / 2 > player.getY() - player.getH()+20)
+			||
+			(m_y - m_h / 2  < player.getY() + player.getH()-20 && m_y - m_h / 2 > player.getY() - player.getH()+20)
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2) 
+		)
+		player.setCoordinates(
+			player.getX() + 1
+			, player.getY()
+		);
+
+	else if (
+		player.getY() + (player.getH() / 2)   >= m_y - (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW()  && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW()  && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2) 
+		)
+		player.setCoordinates(
+			player.getX() 
+			, player.getY() - 1
+		);
+	else if (
+		player.getY() - (player.getH() / 2)  <= m_y + (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() - (player.getH() / 4) >= m_y + (m_h / 2)
+		)
+		player.setCoordinates(
+			player.getX()
+			, player.getY() + 1
+		);
+
+
+
+}
 //class Let
 Let::Let(std::string name, float x, float y, std::string image, int w, int h)
 	: m_strength(100)
-	, Entity(name, x, y, image, w, h)
+	, Entity(name, x, y, "src/player/Image/Let/" + image, w, h)
 
 {
+
+}
+
+sf::Sprite Let::getSprite()
+{
+	return m_sprite;
+}
+void Let::colision(Player& player)
+{
+	if (
+		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() && m_y + m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() && m_y - m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() + (player.getW() / 4) <= m_x - (m_w / 2)
+		)
+		player.setCoordinates(
+			player.getX() - 1
+			, player.getY()
+		);
+
+	else if (
+		player.getX() - (player.getW() / 2) <= m_x + (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() - 20 && m_y + m_h / 2 > player.getY() - player.getH() + 20)
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() - 20 && m_y - m_h / 2 > player.getY() - player.getH() + 20)
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2)
+		)
+		player.setCoordinates(
+			player.getX() + 1
+			, player.getY()
+		);
+
+	else if (
+		player.getY() + (player.getH() / 2) >= m_y - (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2)
+		)
+		player.setCoordinates(
+			player.getX()
+			, player.getY() - 1
+		);
+	else if (
+		player.getY() - (player.getH() / 2) <= m_y + (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() - (player.getH() / 4) >= m_y + (m_h / 2)
+		)
+		player.setCoordinates(
+			player.getX()
+			, player.getY() + 1
+		);
 
 }

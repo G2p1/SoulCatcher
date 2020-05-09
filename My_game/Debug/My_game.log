@@ -1,5 +1,5 @@
 ﻿  main.cpp
-D:\Work\Programming\Game\My_game\My_game\src\main.cpp(19,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(25,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
   entity.cpp
 D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(15,7): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
 D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(14,7): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
@@ -13,10 +13,9 @@ D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(20,44): warning C
           [
               T=int
           ]
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(57,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(58,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(178,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(179,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-  waepon.cpp
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(59,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(60,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(190,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(191,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
   Создание кода...
   My_game.vcxproj -> D:\Work\Programming\Game\My_game\Debug\My_game.exe

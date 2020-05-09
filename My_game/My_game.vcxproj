@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="src\camera\cmaera.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\map\map.cpp" />
     <ClCompile Include="src\player\entity.cpp" />
     <ClCompile Include="src\player\waepon\waepon.cpp" />
   </ItemGroup>
