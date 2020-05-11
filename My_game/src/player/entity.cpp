@@ -124,6 +124,7 @@ float Entity::getH()
 Player::Player(std::string name, float x, float y, std::string image, int w, int h)
 	: m_sword(false)
 	, m_bow(false)
+	, m_souls(0)
 	, Entity(name, x, y, "src/player/Image/Player/" + image, w , h)
 	
 	
@@ -167,6 +168,11 @@ void Player::attack()
 	{
 
 	}
+}
+
+void Player::incSouls()
+{
+	m_souls++;
 }
 
 //class Enemy
@@ -356,4 +362,72 @@ void Let::colision(Player& player)
 			, player.getY() + 1
 		);
 
+}
+
+Neutral::Neutral(std::string name, float x, float y, std::string image, int w, int h)
+	: Entity(name, x, y, "src/player/Image/Neutral/" + image, w, h)
+{
+
+}
+
+void Neutral::takeIt(Player& player)
+{
+	if (
+		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() && m_y + m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() && m_y - m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() + (player.getW() / 4) <= m_x - (m_w / 2)
+		)
+		player.incSouls();
+
+	else if (
+		player.getX() - (player.getW() / 2) <= m_x + (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() - 20 && m_y + m_h / 2 > player.getY() - player.getH() + 20)
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() - 20 && m_y - m_h / 2 > player.getY() - player.getH() + 20)
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2)
+		)
+		player.incSouls();
+
+	else if (
+		player.getY() + (player.getH() / 2) >= m_y - (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2)
+		)
+		player.incSouls();
+	else if (
+		player.getY() - (player.getH() / 2) <= m_y + (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() - (player.getH() / 4) >= m_y + (m_h / 2)
+		)
+		player.incSouls();
 }
