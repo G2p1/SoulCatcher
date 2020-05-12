@@ -16,9 +16,13 @@ int main()
 
     Player player ("player", 100, 100, "player_1.png", 115, 154);
 
-    Enemy enemy("enemy", 250, 250, "enemy_1.png", 233, 165);
+    Enemy enemy("enemy", 600, 250, "enemy_1.png", 233, 165);
 
     Let tree("tree", 500, 500, "let_1.png", 815, 870);
+
+    Neutral* soul;
+    soul = new Neutral("soul", -500, -500, "let_1.png", 50, 50);
+
     while (window.isOpen())
     {
 
@@ -36,7 +40,7 @@ int main()
         player.update(window, time, event);
         enemy.update(player, time);
         tree.colision(player);
-
+        soul->colision(player);
       
 
         cam.setCenterCHaracter(player);
@@ -48,6 +52,7 @@ int main()
         window.draw(tree.getSprite());
         window.draw(player.getSprite());
         window.draw(enemy.getSprite());
+        window.draw(soul->getSprite());
         window.display();
     }
 

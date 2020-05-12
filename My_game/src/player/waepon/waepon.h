@@ -26,4 +26,5 @@ class Sword : public Waepon
 public:
 	Sword();
 	Sword(float x, float y, int range, int damage);
+	
 };

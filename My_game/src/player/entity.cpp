@@ -13,6 +13,8 @@ Entity::Entity(std::string name, float x, float y, std::string image, int w, int
 	, m_isSelect(false)
 	, m_h(h)
 	, m_w(w)
+	, m_health(100)
+	, isAttack(true)
 {
 	m_image.loadFromFile(image);
 	m_texture.loadFromImage(m_image);
@@ -62,7 +64,13 @@ void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 	}
 
 	m_sprite.setPosition(m_x, m_y);
-
+	std::cout << m_health<<"\n";
+	if (m_health < 0)
+		m_life = false;
+	if(!m_life)
+	{
+		m_sprite.setPosition(-200000000, -20000000);
+	}
 }
 
 void Entity::updateEvent(sf::RenderWindow& window, sf::Event& event)
@@ -109,6 +117,7 @@ void Entity::updateEvent(sf::RenderWindow& window, sf::Event& event)
 			m_isMove = false;
 		}
 	}
+	
 }
 
 float Entity::getW()
@@ -125,8 +134,9 @@ Player::Player(std::string name, float x, float y, std::string image, int w, int
 	: m_sword(false)
 	, m_bow(false)
 	, m_souls(0)
+	,m_Bow(x, y, 400, 25)
+	,m_Sword(x, y, 60, 15)
 	, Entity(name, x, y, "src/player/Image/Player/" + image, w , h)
-	
 	
 {
 
@@ -175,6 +185,10 @@ void Player::incSouls()
 	m_souls++;
 }
 
+void Player::operator-(int damage)
+{
+	m_health -= damage;
+}
 //class Enemy
 Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h)
 	: Entity(name, x, y, "src/player/Image/Enemy/" + image, w, h)
@@ -184,11 +198,24 @@ Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h
 
 }
 
-void Enemy::update(Player& player,float time)
+void Enemy::update(Player& player, float time)
 {
-	colision(player);
+	
+	
+	colision(player, isAttack);
+
+	float timer = clock.getElapsedTime().asSeconds();
+	if (timer > 5)
+	{
+		timer = 0;
+		clock.restart();
+		isAttack = true;
+	}
+	std::cout <<timer<< "\n";
 	m_tempX = player.getX();
 	m_tempY = player.getY();
+	
+
 	float distance = sqrt((player.getX() - m_x)* (player.getX() - m_x) + (player.getY() - m_y)* (player.getY() - m_y));
 	if (distance < 1000)
 	{
@@ -200,7 +227,7 @@ void Enemy::update(Player& player,float time)
 	m_sprite.setPosition(m_x, m_y);
 }
 
-void Enemy::colision(Player& player)
+void Enemy::colision(Player& player, bool& attack)
 {
 	if (
 		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
@@ -215,48 +242,58 @@ void Enemy::colision(Player& player)
 		&&
 		player.getX() + (player.getW() / 4) <= m_x - (m_w / 2)
 		)
-		player.setCoordinates(
-								 player.getX() - 1
-								, player.getY()
-								);
-
+	{
+		player.setCoordinates(player.getX() - 1, player.getY());
+		if (attack)
+		{
+			player - 20;
+			attack = false;
+		}
+	}
 	else if (
-		player.getX() - (player.getW() / 2)  <= m_x + (m_w / 2)
+		player.getX() - (player.getW() / 2) <= m_x + (m_w / 2)
 		&&
 		(
-			(m_y + m_h / 2  < player.getY() + player.getH()-20 && m_y + m_h / 2 > player.getY() - player.getH()+20)
+			(m_y + m_h / 2 < player.getY() + player.getH() - 20 && m_y + m_h / 2 > player.getY() - player.getH() + 20)
 			||
-			(m_y - m_h / 2  < player.getY() + player.getH()-20 && m_y - m_h / 2 > player.getY() - player.getH()+20)
+			(m_y - m_h / 2 < player.getY() + player.getH() - 20 && m_y - m_h / 2 > player.getY() - player.getH() + 20)
 			||
 			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
 			)
 		&&
-		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2) 
+		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2)
 		)
-		player.setCoordinates(
-			player.getX() + 1
-			, player.getY()
-		);
-
+	{
+		player.setCoordinates(player.getX() + 1, player.getY());
+		if (attack)
+		{
+			player - 20;
+			attack = false;
+		}
+	}
 	else if (
-		player.getY() + (player.getH() / 2)   >= m_y - (m_h / 2)
+		player.getY() + (player.getH() / 2) >= m_y - (m_h / 2)
 		&&
 		(
-			(m_x + m_w / 2 < player.getX() + player.getW()  && m_x + m_w / 2 > player.getX() - player.getW())
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
 			||
-			(m_x - m_w / 2 < player.getX() + player.getW()  && m_x - m_w / 2 > player.getX() - player.getW())
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
 			||
 			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
 			)
 		&&
-		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2) 
+		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2)
 		)
-		player.setCoordinates(
-			player.getX() 
-			, player.getY() - 1
-		);
+	{
+		player.setCoordinates(player.getX(), player.getY() - 1);
+		if (attack)
+		{
+			player - 20;
+			attack = false;
+		};
+	}
 	else if (
-		player.getY() - (player.getH() / 2)  <= m_y + (m_h / 2)
+		player.getY() - (player.getH() / 2) <= m_y + (m_h / 2)
 		&&
 		(
 			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
@@ -268,18 +305,20 @@ void Enemy::colision(Player& player)
 		&&
 		player.getY() - (player.getH() / 4) >= m_y + (m_h / 2)
 		)
-		player.setCoordinates(
-			player.getX()
-			, player.getY() + 1
-		);
-
+	{
+		player.setCoordinates(player.getX(), player.getY() + 1);
+		if (attack)
+		{
+			player - 20;
+			attack = false;
+		}
+	}
 
 
 }
 //class Let
 Let::Let(std::string name, float x, float y, std::string image, int w, int h)
-	: m_strength(100)
-	, Entity(name, x, y, "src/player/Image/Let/" + image, w, h)
+	: Entity(name, x, y, "src/player/Image/Let/" + image, w, h)
 
 {
 
@@ -370,64 +409,84 @@ Neutral::Neutral(std::string name, float x, float y, std::string image, int w, i
 
 }
 
-void Neutral::takeIt(Player& player)
+bool takeIt(Player& player, Neutral* soul)
 {
 	if (
-		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
+		player.getX() + (player.getW() / 2) >= soul->getX() - (soul->getW() / 2)
 		&&
 		(
-			(m_y + m_h / 2 < player.getY() + player.getH() && m_y + m_h / 2 > player.getY() - player.getH())
+			(soul->getY() + soul->getH() / 2 < player.getY() + player.getH() && soul->getY() + soul->getH() / 2 > player.getY() - player.getH())
 			||
-			(m_y - m_h / 2 < player.getY() + player.getH() && m_y - m_h / 2 > player.getY() - player.getH())
+			(soul->getY() - soul->getH() / 2 < player.getY() + player.getH() && soul->getY() - soul->getH() / 2 > player.getY() - player.getH())
 			||
-			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			(soul->getY() - soul->getH() < player.getY() - player.getH() && soul->getY() + soul->getH() / 2> player.getY() + player.getH())
 			)
 		&&
-		player.getX() + (player.getW() / 4) <= m_x - (m_w / 2)
+		player.getX() + (player.getW() / 4) <= soul->getX() - (soul->getW() / 2)
 		)
+	{
 		player.incSouls();
+		return true;
+	}
 
 	else if (
-		player.getX() - (player.getW() / 2) <= m_x + (m_w / 2)
+		player.getX() - (player.getW() / 2) <= soul->getX() + (soul->getW() / 2)
 		&&
 		(
-			(m_y + m_h / 2 < player.getY() + player.getH() - 20 && m_y + m_h / 2 > player.getY() - player.getH() + 20)
+			(soul->getY() + soul->getH() / 2 < player.getY() + player.getH() - 20 && soul->getY() + soul->getH() / 2 > player.getY() - player.getH() + 20)
 			||
-			(m_y - m_h / 2 < player.getY() + player.getH() - 20 && m_y - m_h / 2 > player.getY() - player.getH() + 20)
+			(soul->getY() - soul->getH() / 2 < player.getY() + player.getH() - 20 && soul->getY() - soul->getH() / 2 > player.getY() - player.getH() + 20)
 			||
-			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			(soul->getY() - soul->getH() < player.getY() - player.getH() && soul->getY() + soul->getH() / 2> player.getY() + player.getH())
 			)
 		&&
-		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2)
+		player.getX() - (player.getW() / 4) >= soul->getX() + (soul->getW() / 2)
 		)
+	{
 		player.incSouls();
+		return true;
+	}
 
 	else if (
-		player.getY() + (player.getH() / 2) >= m_y - (m_h / 2)
+		player.getY() + (player.getH() / 2) >= soul->getY() - (soul->getH() / 2)
 		&&
 		(
-			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			(soul->getX() + soul->getW() / 2 < player.getX() + player.getW() && soul->getX() + soul->getW() / 2 > player.getX() - player.getW())
 			||
-			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			(soul->getX() - soul->getW() / 2 < player.getX() + player.getW() && soul->getX() - soul->getW() / 2 > player.getX() - player.getW())
 			||
-			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			(soul->getX() - soul->getW() < player.getX() - player.getW() && soul->getX() + soul->getW() / 2> player.getX() + player.getW())
 			)
 		&&
-		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2)
+		player.getY() + (player.getH() / 4) <= soul->getY() - (soul->getH() / 2)
 		)
+	{
 		player.incSouls();
+		return true;
+	}
 	else if (
-		player.getY() - (player.getH() / 2) <= m_y + (m_h / 2)
+		player.getY() - (player.getH() / 2) <= soul->getY() + (soul->getH() / 2)
 		&&
 		(
-			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			(soul->getX() + soul->getW() / 2 < player.getX() + player.getW() && soul->getX() + soul->getW() / 2 > player.getX() - player.getW())
 			||
-			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			(soul->getX() - soul->getW() / 2 < player.getX() + player.getW() && soul->getX() - soul->getW() / 2 > player.getX() - player.getW())
 			||
-			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			(soul->getX() - soul->getW() < player.getX() - player.getW() && soul->getX() + soul->getW() / 2> player.getX() + player.getW())
 			)
 		&&
-		player.getY() - (player.getH() / 4) >= m_y + (m_h / 2)
+		player.getY() - (player.getH() / 4) >= soul->getY() + (soul->getH() / 2)
 		)
+	{
 		player.incSouls();
+		return true;
+	}
+	return false;
+}
+void Neutral::colision(Player& player)
+{	
+	bool colis = false;
+		colis =takeIt(player, this);
+		if (colis)
+		m_sprite.setPosition(-2000000000, -200000000);
 }

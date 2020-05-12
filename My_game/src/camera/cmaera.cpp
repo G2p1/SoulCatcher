@@ -45,8 +45,8 @@ void Camera::mouseMove(sf::RenderWindow& window, float time)
 {
 	sf::Vector2i localPosition = sf::Mouse::getPosition(window);
 
-	if (localPosition.x < 20) { m_view.move(-0.2 * time, 0); }
-	if (localPosition.x > window.getSize().x - 20) { m_view.move(0.2 * time, 0); }
-	if (localPosition.y > window.getSize().y - 20) { m_view.move(0, 0.2 * time); }
-	if (localPosition.y < 20) { m_view.move(0, -0.2 * time); }
+	if (localPosition.x < 50) { m_view.move(-0.5 * time, 0); }
+	if (localPosition.x > window.getSize().x - 50) { m_view.move(0.5 * time, 0); }
+	if (localPosition.y > window.getSize().y - 50) { m_view.move(0, 0.5 * time); }
+	if (localPosition.y < 50) { m_view.move(0, -0.5 * time); }
 }
