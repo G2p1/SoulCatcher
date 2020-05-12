@@ -1,33 +1,3 @@
-﻿  cmaera.cpp
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(15,19): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(20,19): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(25,24): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(30,22): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(48,47): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(49,22): warning C4018: >: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(49,67): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(50,22): warning C4018: >: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(50,70): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(51,50): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-  main.cpp
+﻿  main.cpp
 D:\Work\Programming\Game\My_game\My_game\src\main.cpp(29,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
-  map.cpp
-  entity.cpp
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(15,7): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(14,7): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(22,49): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
-          with
-          [
-              T=int
-          ]
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(22,44): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
-          with
-          [
-              T=int
-          ]
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(61,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(62,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(223,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(224,50): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-  Создание кода...
   My_game.vcxproj -> D:\Work\Programming\Game\My_game\Debug\My_game.exe

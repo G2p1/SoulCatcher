@@ -38,6 +38,7 @@ int main()
         }
 
         player.update(window, time, event);
+        player.attack(window, event, enemy, tree);
         enemy.update(player, time);
         tree.colision(player);
         soul->colision(player);

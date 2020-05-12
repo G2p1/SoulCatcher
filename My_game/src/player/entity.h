@@ -1,7 +1,10 @@
 #pragma once
+
 #include<iostream>
 #include <SFML/Graphics.hpp>
 #include "waepon/waepon.h"
+class Enemy;
+class Let;
 
 //Interface
 class Entity 
@@ -37,6 +40,7 @@ public:
 
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
 	void updateEvent(sf::RenderWindow& window, sf::Event& event);
+	void operator-(int damage);
 
 };
 
@@ -46,18 +50,20 @@ class Player : public Entity
 	bool m_sword;
 	bool m_bow;
 
-	Bow m_Bow;
-	Sword m_Sword;
+	
 
 public:
+	/*Bow m_Bow;
+	Sword m_Sword;*/
 
 	Player(std::string name, float x, float y, std::string image, int w, int h);
 
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
 	void updateEvent(sf::RenderWindow& window, sf::Event& event);
-	void attack();
+	
+	void attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let);
 	void incSouls();
-	void operator-(int damage);
+	
 };
 
 class Enemy : public Entity
