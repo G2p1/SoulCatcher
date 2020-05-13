@@ -47,7 +47,7 @@ int main()
         cam.setCenterCHaracter(player);
         cam.keyMove(time);
         cam.mouseMove(window, time);
-        cam.smth();
+        
 
         window.setView(cam.getView());
         window.clear(sf::Color(24, 145, 75));
