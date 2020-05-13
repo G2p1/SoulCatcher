@@ -84,6 +84,7 @@ public:
 	void attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let, float time);
 	void incSouls();
 	Bow getBow();
+	bool getlife();
 };
 
 class Enemy : public Entity

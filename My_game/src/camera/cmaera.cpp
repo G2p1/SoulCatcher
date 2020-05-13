@@ -32,6 +32,7 @@ void Camera::keyMove(float time)
 }
 void Camera::setCenterCHaracter(Player& player)
 {
+	if(player.getlife())
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F2))
 		m_view.setCenter(player.getX(), player.getY());
 }
@@ -49,10 +50,4 @@ void Camera::mouseMove(sf::RenderWindow& window, float time)
 	if (localPosition.x > window.getSize().x - 50) { m_view.move(0.5 * time, 0); }
 	if (localPosition.y > window.getSize().y - 50) { m_view.move(0, 0.5 * time); }
 	if (localPosition.y < 50) { m_view.move(0, -0.5 * time); }
-}
-void Camera::smth()
-{
-	sf::Vector2f smth;
-	smth = m_view.getCenter();
-	std::cout << smth.x << " " << smth.y << "\n";
 }

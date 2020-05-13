@@ -167,7 +167,6 @@ void Player::updateEvent(sf::RenderWindow& window, sf::Event& event)
 
 			if (event.key.code == sf::Keyboard::W)
 			{
-				std::cout << "Sword\n";
 				m_bow = false;
 				m_sword = true;
 			}
@@ -193,9 +192,9 @@ void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Le
 				float enemy_distance = sqrt((enemy.getX() - m_x) * (enemy.getX() - m_x) + (enemy.getY() - m_y) * (enemy.getY() - m_y));
 				float let_distance = sqrt((let.getX() - m_x) * (let.getX() - m_x) + (let.getY() - m_y) * (let.getY() - m_y));
 
-				if (enemy_distance <= 400)
+				if (enemy_distance- enemy.getH()/2 <= 400)
 					enemy - 20;
-				if (let_distance <= 400)
+				if (let_distance - let.getH()/2 <= 400)
 					let - 20;
 				isAttack = false;
 			}
@@ -219,6 +218,10 @@ Bow Player::getBow()
 	return m_Bow;
 }
 
+bool Player::getlife()
+{
+	return m_life;
+}
 //class Enemy
 Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h)
 	: Entity(name, x, y, "src/player/Image/Enemy/" + image, w, h)

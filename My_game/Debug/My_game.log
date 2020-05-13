@@ -1,3 +1,10 @@
-﻿  main.cpp
-D:\Work\Programming\Game\My_game\My_game\src\main.cpp(29,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
+﻿  map.cpp
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(23,35): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(23,27): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(28,36): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(28,28): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(33,34): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(33,26): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(41,13): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\map\map.cpp(42,14): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
   My_game.vcxproj -> D:\Work\Programming\Game\My_game\Debug\My_game.exe
