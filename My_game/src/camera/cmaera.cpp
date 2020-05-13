@@ -3,7 +3,7 @@
 Camera::Camera()
 {
 	m_view.reset(sf::FloatRect(0, 0, 1920, 1080));
-	//m_view.zoom(4);
+	m_view.zoom(0.5);
 }
 
 

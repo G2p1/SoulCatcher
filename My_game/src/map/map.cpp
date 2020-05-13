@@ -41,32 +41,42 @@ void Map::colision(Player& player)
 	for (int i = (player.getX()- player.getW() / 2) / 32; i < (player.getX() + player.getW()/2) / 32; i++) {
 		for (int j = (player.getY() - player.getH() / 2) / 32; j < (player.getY() + player.getH()/2) / 32; j++) {
 			if (TileMap[i][j] == '3') {
-				player.setCoordinates(player.getX(), player.getY()+1);
+				player.setCoordinates(player.getX(), player.getY()+0.5);
 			}
 			if (TileMap[i][j] == '0') {
-				player.setCoordinates(player.getX()+1, player.getY());
+				player.setCoordinates(player.getX()+0.5, player.getY());
 			}
 			if (TileMap[i][j] == '1') {
-				player.setCoordinates(player.getX(), player.getY()-1 );
+				player.setCoordinates(player.getX(), player.getY()-0.5 );
 			}
 			if (TileMap[i][j] == '2') {
-				player.setCoordinates(player.getX()-1, player.getY());
+				player.setCoordinates(player.getX()-0.5, player.getY());
 			}
-
-			/*if (TileMap[i][j] == 's') {
-				m_count_stone++;
-				TileMap[i][j] = ' ';
-			}
-			if (TileMap[i][j] == 'h') {
-				health += 20;
-				TileMap[i][j] = ' ';
-			}
-			if (TileMap[i][j] == 'f') {
-				health -= 40;
-				TileMap[i][j] = ' ';
-			}*/
 
 		}
 	}
+
+}
+
+void Map::colision(Neutral& player)
+{
+	if (player.getlife())
+		for (int i = (player.getX() - player.getW() / 2) / 32; i < (player.getX() + player.getW() / 2) / 32; i++) {
+			for (int j = (player.getY() - player.getH() / 2) / 32; j < (player.getY() + player.getH() / 2) / 32; j++) {
+				if (TileMap[i][j] == '3') {
+					player.setCoordinates(player.getX(), player.getY() + 0.5);
+				}
+				if (TileMap[i][j] == '0') {
+					player.setCoordinates(player.getX() + 0.5, player.getY());
+				}
+				if (TileMap[i][j] == '1') {
+					player.setCoordinates(player.getX(), player.getY() - 0.5);
+				}
+				if (TileMap[i][j] == '2') {
+					player.setCoordinates(player.getX() - 0.5, player.getY());
+				}
+
+			}
+		}
 
 }

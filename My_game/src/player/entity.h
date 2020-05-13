@@ -15,7 +15,9 @@ class Bow
 	bool m_doing;
 	bool m_acsses;
 	sf::Image m_image;
+	sf::Image m_imageArrow;
 	sf::Texture m_texture;
+	sf::Texture m_textureArrow;
 	sf::Sprite m_sprite;
 public:
 	Bow();
@@ -48,7 +50,7 @@ public:
 	sf::Event m_event;
 	sf::Clock clock;
 	
-
+	//Entity();
 	Entity(std::string name, float x, float y, std::string image, int w, int h);
 	
 	void setCoordinates(float x, float y);
@@ -92,6 +94,7 @@ class Enemy : public Entity
 	bool isDetected;
 	
 public: 
+	Enemy();
 	Enemy(std::string name, float x, float y, std::string image, int w, int h);
 
 	void update(Player& player, float time);
@@ -102,18 +105,23 @@ class Let : public Entity
 {
 
 public:
-
+	Let();
 	Let(std::string name, float x, float y, std::string image, int w, int h);
 
 	sf::Sprite getSprite();
 	void colision(Player& player);
+	void colision(Enemy& player);
+	
 };
 
 class Neutral : public Entity
 {
+	bool rander;
 public: 
+	Neutral();
 	Neutral(std::string name, float x, float y, std::string image, int w, int h);
 	void colision(Player& player);
 	friend bool takeIt(Player& player, Neutral* soul);
-
+	void update(float times);
+	bool getlife();
 };

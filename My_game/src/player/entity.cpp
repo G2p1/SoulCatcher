@@ -1,6 +1,14 @@
+#include"time.h"
+#include<stdio.h>
+#include<cstdlib>
 #include"entity.h"
 
+
 //class Entity 
+//Entity::Entity()
+//{
+
+//}
 Entity::Entity(std::string name, float x, float y, std::string image, int w, int h)
 	: m_name(name)
 	, m_x(x)
@@ -58,8 +66,8 @@ void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 
 			if (distance > 2)
 			{
-				m_x += 0.3*time  * (m_tempX - m_x) / distance;
-				m_y += 0.3 *time * (m_tempY - m_y) / distance;
+				m_x += 0.15*time  * (m_tempX - m_x) / distance;
+				m_y += 0.15 *time * (m_tempY - m_y) / distance;
 			}
 	}
 
@@ -223,6 +231,12 @@ bool Player::getlife()
 	return m_life;
 }
 //class Enemy
+Enemy::Enemy() 
+	: Entity("enemy", 800, 350, "src/player/Image/Enemy/enemy_1.png", 107, 74)
+{
+
+}
+
 Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h)
 	: Entity(name, x, y, "src/player/Image/Enemy/" + image, w, h)
 	, isDetected (false)
@@ -236,7 +250,7 @@ void Enemy::update(Player& player, float time)
 	colision(player, isAttack);
 
 	float timer = clock.getElapsedTime().asSeconds();
-	if (timer > 5)
+	if (timer > 3)
 	{
 		timer = 0;
 		clock.restart();
@@ -356,6 +370,12 @@ void Enemy::colision(Player& player, bool& attack)
 
 }
 //class Let
+Let::Let() 
+	:Entity("tree", 500, 500, "src/player/Image/Let/shkaph.png", 44, 69)
+{
+
+}
+
 Let::Let(std::string name, float x, float y, std::string image, int w, int h)
 	: Entity(name, x, y, "src/player/Image/Let/" + image, w, h)
 
@@ -451,11 +471,135 @@ void Let::colision(Player& player)
 	}
 }
 
+void Let::colision(Enemy& player)
+{
+	if (
+		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() && m_y + m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() && m_y - m_h / 2 > player.getY() - player.getH())
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() + (player.getW() / 4) <= m_x - (m_w / 2)
+		)
+		player.setCoordinates(
+			player.getX() - 1
+			, player.getY()
+		);
+
+	else if (
+		player.getX() - (player.getW() / 2) <= m_x + (m_w / 2)
+		&&
+		(
+			(m_y + m_h / 2 < player.getY() + player.getH() - 20 && m_y + m_h / 2 > player.getY() - player.getH() + 20)
+			||
+			(m_y - m_h / 2 < player.getY() + player.getH() - 20 && m_y - m_h / 2 > player.getY() - player.getH() + 20)
+			||
+			(m_y - m_h< player.getY() - player.getH() && m_y + m_h / 2> player.getY() + player.getH())
+			)
+		&&
+		player.getX() - (player.getW() / 4) >= m_x + (m_w / 2)
+		)
+		player.setCoordinates(
+			player.getX() + 1
+			, player.getY()
+		);
+
+	else if (
+		player.getY() + (player.getH() / 2) >= m_y - (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() + (player.getH() / 4) <= m_y - (m_h / 2)
+		)
+		player.setCoordinates(
+			player.getX()
+			, player.getY() - 1
+		);
+	else if (
+		player.getY() - (player.getH() / 2) <= m_y + (m_h / 2)
+		&&
+		(
+			(m_x + m_w / 2 < player.getX() + player.getW() && m_x + m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w / 2 < player.getX() + player.getW() && m_x - m_w / 2 > player.getX() - player.getW())
+			||
+			(m_x - m_w< player.getX() - player.getW() && m_x + m_w / 2> player.getX() + player.getW())
+			)
+		&&
+		player.getY() - (player.getH() / 4) >= m_y + (m_h / 2)
+		)
+		player.setCoordinates(
+			player.getX()
+			, player.getY() + 1
+		);
+
+	m_sprite.setPosition(m_x, m_y);
+
+	if (m_health < 0)
+		m_life = false;
+	if (!m_life)
+	{
+		m_x = -2000000;
+		m_y = -2000000;
+	}
+}
 //Neutral
-Neutral::Neutral(std::string name, float x, float y, std::string image, int w, int h)
-	: Entity(name, x, y, "src/player/Image/Neutral/" + image, w, h)
+Neutral::Neutral()
+	:Entity("soul", 500, 500, "src/player/Image/Neutral/soul.png", 30, 29)
 {
 
+}
+Neutral::Neutral(std::string name, float x, float y, std::string image, int w, int h)
+	: Entity(name, x, y, "src/player/Image/Neutral/" + image, w, h)
+	, rander(true)
+{
+
+	srand(time(0));
+}
+
+void Neutral::update(float times)
+{	
+	float timer = clock.getElapsedTime().asSeconds();
+	
+	if (rander)
+	{
+		m_tempX = rand()%(40*31);
+		m_tempY = rand() % (46*31);
+		//std::cout << m_tempX << " " << m_tempY << "\n";
+			rander = false;
+			m_isMove = true;
+	}
+	if (timer > 2)
+	{
+		timer = 0;
+		clock.restart();
+		rander = true;
+		
+	}
+		float distance = 0;
+	if (m_isMove)
+	{
+		distance = sqrt((m_tempX - m_x) * (m_tempX - m_x) + (m_tempY - m_y) * (m_tempY - m_y));
+
+		if (distance > 2)
+		{
+			m_x += 0.1 * times * (m_tempX - m_x) / distance;
+			m_y += 0.1 * times * (m_tempY - m_y) / distance;
+		}
+		else
+			m_isMove = false;
+	}
 }
 
 bool takeIt(Player& player, Neutral* soul)
@@ -542,9 +686,14 @@ void Neutral::colision(Player& player)
 		{
 			m_x = -2000000;
 			m_y = -2000000;
+			m_life = false;
 		}
 }
 
+bool Neutral::getlife()
+{
+	return m_life;
+}
 
 //Bow
 Bow::Bow()
@@ -558,19 +707,22 @@ Bow::Bow()
 	, m_acsses(true)
 {
 	m_image.loadFromFile("src/player/Image/Waepon/bow.png");
+	m_imageArrow.loadFromFile("src/player/Image/Waepon/arrow_1.png");
 	m_texture.loadFromImage(m_image);
+	m_textureArrow.loadFromImage(m_imageArrow);
 	m_sprite.setTexture(m_texture);
-	m_sprite.setTextureRect(sf::IntRect(0, 0, 20, 20));
+	m_sprite.setTextureRect(sf::IntRect(0, 0, 31, 30));
 	m_sprite.setPosition(m_x, m_y);
-	m_sprite.setOrigin(20 / 2, 20 / 2);
+	m_sprite.setOrigin(31 / 2, 30 / 2);
 }
 
 void Bow::update(sf::RenderWindow& window, sf::Event event, Player& player, Enemy& enemy, float time)
 {
 	if (!m_doing)
 	{
-		m_x = player.getX();
+		m_x = player.getX()+30;
 		m_y = player.getY();
+		m_sprite.setTexture(m_texture);
 	}
 
 
@@ -582,6 +734,10 @@ void Bow::update(sf::RenderWindow& window, sf::Event event, Player& player, Enem
 	if (event.type == sf::Event::MouseButtonPressed)
 		if (event.key.code == sf::Mouse::Left)
 		{
+			m_sprite.setTexture(m_textureArrow);
+			m_sprite.setTextureRect(sf::IntRect(0, 0, 31, 30));
+			m_sprite.setPosition(m_x, m_y);
+			m_sprite.setOrigin(31 / 2, 30 / 2);
 			m_doing = true;
 			m_tempX = pos.x;
 			m_tempY = pos.y;
@@ -600,8 +756,8 @@ void Bow::update(sf::RenderWindow& window, sf::Event event, Player& player, Enem
 
 		if (distance > 2)
 		{
-			m_x += 0.3 * time * (m_rangeX - m_x) / distance;
-			m_y += 0.3 * time * (m_rangeY - m_y) / distance;
+			m_x += 0.1 * time * (m_rangeX - m_x) / distance;
+			m_y += 0.1 * time * (m_rangeY - m_y) / distance;
 		}
 		else
 		{

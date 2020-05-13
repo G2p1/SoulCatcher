@@ -1,11 +1,17 @@
+#include<stdlib.h>
+#include"time.h"
+#include<array>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include"player/entity.h"
 #include"camera/camera.h"
 #include"map/map.h"
 
+
 int main()
 {
+    srand(time(0));
+
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML window", sf::Style::Fullscreen);
 
     sf::Clock clock;
@@ -14,14 +20,38 @@ int main()
     Camera cam;
     Map map;
 
-    Player player ("player", 200, 200, "player_1.png", 115, 154);
+    Player player ("player", 200, 200, "player_1.png", 51, 68);
 
-    Enemy enemy("enemy", 800, 350, "enemy_1.png", 233, 165);
+    std::array<Enemy, 4> enemys;
+    
+    for (int i = 0; i < enemys.size(); i++)
+    {
+        float x = rand() % (30 * 31) + 2;
+        float y = rand() % (40 * 31) + 2;
+        enemys[i].setCoordinates(x, y);
+    }
+    
+    Enemy enemy("enemy", 800, 350, "enemy_1.png", 107, 74);
 
-    Let tree("tree", 500, 500, "let_1.png", 300, 300);
+    std::array<Let, 4> shaphs;
 
-    Neutral* soul;
-    soul = new Neutral("soul", 500, 500, "let_1.png", 50, 50);
+    for (int i = 0; i < shaphs.size(); i++)
+    {
+        float x = rand() % (30 * 31) + 2;
+        float y = rand() % (40 * 31) + 2;
+        shaphs[i].setCoordinates(x, y);
+    }
+    Let tree("tree", 500, 500, "shkaph.png", 44, 69);
+
+    std::array<Neutral, 10> souls;
+
+    for (int i = 0; i < souls.size(); i++)
+    {
+        float x = rand() % (30 * 31) + 2;
+        float y = rand() % (40 * 31) + 2;
+        souls[i].setCoordinates(x, y);
+    }
+   
 
     while (window.isOpen())
     {
@@ -32,17 +62,40 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            // Close window: exit
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
         player.update(window, time, event);
-        player.attack(window, event, enemy, tree, time);
-        enemy.update(player, time);
-        tree.colision(player);
-        soul->colision(player);
+        for (int i = 0; i < enemys.size(); i++)
+        {
+            enemys[i].update(player, time);
+
+        }
+
+        for (int i = 0; i < enemys.size(); i++)
+            for(int j = 0; j < shaphs.size();j++)
+        {
+            shaphs[j].colision(enemys[i]);
+
+            player.attack(window, event, enemys[i], shaphs[j], time);
+        }
+        
+        for (int i = 0; i < shaphs.size(); i++)
+        {
+            shaphs[i].colision(player);
+
+        }
+        
+        for (int i = 0; i < souls.size(); i++)
+        {
+            souls[i].colision(player);
+            souls[i].update(time);
+           
+            map.colision(souls[i]);
+        }
         map.colision(player);
+        
 
         cam.setCenterCHaracter(player);
         cam.keyMove(time);
@@ -50,14 +103,23 @@ int main()
         
 
         window.setView(cam.getView());
-        window.clear(sf::Color(24, 145, 75));
+        window.clear(sf::Color(128, 106, 89));
 
         map.update(window);
-
-        window.draw(tree.getSprite());
+        
+        for (int i = 0; i < shaphs.size(); i++)
+        {
+            window.draw(shaphs[i].getSprite());
+        }
         window.draw(player.getSprite());
-        window.draw(enemy.getSprite());
-        window.draw(soul->getSprite());
+        for (int i = 0; i < enemys.size(); i++)
+        {
+            window.draw(enemys[i].getSprite());
+        }
+        for (int i = 0; i < souls.size(); i++)
+        {
+            window.draw(souls[i].getSprite());
+        }
         window.draw(player.getBow().getSprite());
 
         window.display();
