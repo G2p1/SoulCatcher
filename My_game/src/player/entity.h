@@ -2,9 +2,30 @@
 
 #include<iostream>
 #include <SFML/Graphics.hpp>
-#include "waepon/waepon.h"
+
 class Enemy;
 class Let;
+class Player;
+class Bow
+{
+	float m_x, m_y;
+	float m_tempX, m_tempY;
+	float m_rangeX, m_rangeY;
+	int m_damage, m_range;
+	bool m_doing;
+	bool m_acsses;
+	sf::Image m_image;
+	sf::Texture m_texture;
+	sf::Sprite m_sprite;
+public:
+	Bow();
+
+	void update(sf::RenderWindow& window, sf::Event event, Player& player, Enemy& enemy, float time);
+	sf::Sprite getSprite();
+	void setCoordinates(float x, float y);
+	void colision(Enemy& enemy);
+};
+
 
 //Interface
 class Entity 
@@ -50,20 +71,19 @@ class Player : public Entity
 	bool m_sword;
 	bool m_bow;
 
-	
+	Bow m_Bow;
 
 public:
-	/*Bow m_Bow;
-	Sword m_Sword;*/
+	
 
 	Player(std::string name, float x, float y, std::string image, int w, int h);
 
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
 	void updateEvent(sf::RenderWindow& window, sf::Event& event);
 	
-	void attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let);
+	void attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let, float time);
 	void incSouls();
-	
+	Bow getBow();
 };
 
 class Enemy : public Entity

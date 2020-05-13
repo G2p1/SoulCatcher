@@ -13,4 +13,5 @@ public:
 	void keyMove(float time);
 	void mouseMove(sf::RenderWindow& window, float time);
 	void setCenterCHaracter(Player& player);
+	void smth();
 };

@@ -50,3 +50,9 @@ void Camera::mouseMove(sf::RenderWindow& window, float time)
 	if (localPosition.y > window.getSize().y - 50) { m_view.move(0, 0.5 * time); }
 	if (localPosition.y < 50) { m_view.move(0, -0.5 * time); }
 }
+void Camera::smth()
+{
+	sf::Vector2f smth;
+	smth = m_view.getCenter();
+	std::cout << smth.x << " " << smth.y << "\n";
+}

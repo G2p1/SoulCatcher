@@ -65,11 +65,12 @@ void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 
 	m_sprite.setPosition(m_x, m_y);
 	
-	if (m_health < 0)
+	if (m_health <= 0)
 		m_life = false;
 	if(!m_life)
 	{
-		m_sprite.setPosition(-200000000, -20000000);
+		m_x = -2000000;
+		m_y = -2000000;
 	}
 }
 
@@ -160,7 +161,6 @@ void Player::updateEvent(sf::RenderWindow& window, sf::Event& event)
 		
 			if (event.key.code == sf::Keyboard::Q)
 			{
-				std::cout << "BBBow\n";
 				m_bow = true;
 				m_sword = false;
 			}
@@ -177,21 +177,18 @@ void Player::updateEvent(sf::RenderWindow& window, sf::Event& event)
 
 }
 
-void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let)
+void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let, float time)
 {
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
 	sf::Vector2f pos = window.mapPixelToCoords(pixelPos);
 
 	if (m_isSelect) {
-		/*if (m_bow)
-			if (event.type == sf::Event::MouseButtonPressed)
-				if (event.key.code == sf::Mouse::Left)
-				{
-					m_tempX = pos.x;
-					m_tempY = pos.y;
-
-				}*/
+		if (m_bow)
+			m_Bow.update(window, event, *this, enemy, time);
+		else
+			m_Bow.setCoordinates(-2000000, -200000);
 		if (m_sword)
+			if(isAttack)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				float enemy_distance = sqrt((enemy.getX() - m_x) * (enemy.getX() - m_x) + (enemy.getY() - m_y) * (enemy.getY() - m_y));
 				float let_distance = sqrt((let.getX() - m_x) * (let.getX() - m_x) + (let.getY() - m_y) * (let.getY() - m_y));
@@ -200,8 +197,15 @@ void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Le
 					enemy - 20;
 				if (let_distance <= 400)
 					let - 20;
+				isAttack = false;
 			}
-			//m_Sword.attack(enemy, let);
+	}
+	float timer = clock.getElapsedTime().asSeconds();
+	if (timer > 2.5)
+	{
+		timer = 0;
+		clock.restart();
+		isAttack = true;
 	}
 }
 
@@ -210,6 +214,10 @@ void Player::incSouls()
 	m_souls++;
 }
 
+Bow Player::getBow()
+{
+	return m_Bow;
+}
 
 //class Enemy
 Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h)
@@ -222,8 +230,6 @@ Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h
 
 void Enemy::update(Player& player, float time)
 {
-	
-	std::cout << m_health << "\n";
 	colision(player, isAttack);
 
 	float timer = clock.getElapsedTime().asSeconds();
@@ -247,6 +253,14 @@ void Enemy::update(Player& player, float time)
 	}
 
 	m_sprite.setPosition(m_x, m_y);
+
+	if (m_health <= 0)
+		m_life = false;
+	if (!m_life)
+	{
+		m_x = -2000000;
+		m_y = -2000000;
+	}
 }
 
 void Enemy::colision(Player& player, bool& attack)
@@ -423,8 +437,18 @@ void Let::colision(Player& player)
 			, player.getY() + 1
 		);
 
+	m_sprite.setPosition(m_x, m_y);
+
+	if (m_health < 0)
+		m_life = false;
+	if (!m_life)
+	{
+		m_x = -2000000;
+		m_y = -2000000;
+	}
 }
 
+//Neutral
 Neutral::Neutral(std::string name, float x, float y, std::string image, int w, int h)
 	: Entity(name, x, y, "src/player/Image/Neutral/" + image, w, h)
 {
@@ -507,8 +531,101 @@ bool takeIt(Player& player, Neutral* soul)
 }
 void Neutral::colision(Player& player)
 {	
-	bool colis = false;
+	m_sprite.setPosition(m_x, m_y);
+
+		bool colis = false;
 		colis =takeIt(player, this);
 		if (colis)
-		m_sprite.setPosition(-2000000000, -200000000);
+		{
+			m_x = -2000000;
+			m_y = -2000000;
+		}
+}
+
+
+//Bow
+Bow::Bow()
+	: m_x(-2000000000)
+	, m_y(-2000000000)
+	, m_damage(30)
+	, m_range(500)
+	, m_doing(false)
+	, m_tempY(0)
+	, m_tempX(0)
+	, m_acsses(true)
+{
+	m_image.loadFromFile("src/player/Image/Waepon/bow.png");
+	m_texture.loadFromImage(m_image);
+	m_sprite.setTexture(m_texture);
+	m_sprite.setTextureRect(sf::IntRect(0, 0, 20, 20));
+	m_sprite.setPosition(m_x, m_y);
+	m_sprite.setOrigin(20 / 2, 20 / 2);
+}
+
+void Bow::update(sf::RenderWindow& window, sf::Event event, Player& player, Enemy& enemy, float time)
+{
+	if (!m_doing)
+	{
+		m_x = player.getX();
+		m_y = player.getY();
+	}
+
+
+	m_sprite.setPosition(m_x, m_y);
+
+	sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+	sf::Vector2f pos = window.mapPixelToCoords(pixelPos);
+	if(m_acsses)
+	if (event.type == sf::Event::MouseButtonPressed)
+		if (event.key.code == sf::Mouse::Left)
+		{
+			m_doing = true;
+			m_tempX = pos.x;
+			m_tempY = pos.y;
+
+			float distance = sqrt((m_tempX - m_x) * (m_tempX - m_x) + (m_tempY - m_y) * (m_tempY - m_y));
+			m_rangeY = m_y - ((m_y - m_tempY) * m_range / distance);
+			m_rangeX = m_x - ((m_x - m_tempX) * m_range / distance);
+
+			m_acsses = false;
+		}
+
+	if (m_doing)
+	{
+
+		float distance = sqrt((m_rangeX - m_x) * (m_rangeX - m_x) + (m_rangeY - m_y) * (m_rangeY - m_y));
+
+		if (distance > 2)
+		{
+			m_x += 0.3 * time * (m_rangeX - m_x) / distance;
+			m_y += 0.3 * time * (m_rangeY - m_y) / distance;
+		}
+		else
+		{
+			m_doing = false;
+			m_acsses = true;
+		}
+	}
+	colision(enemy);
+}
+sf::Sprite Bow::getSprite()
+{
+	return m_sprite;
+}
+
+void Bow::setCoordinates(float x, float y)
+{
+	m_x = x;
+	m_y = y;
+	m_sprite.setPosition(m_x, m_y);
+}
+
+void Bow::colision(Enemy& enemy)
+{
+	if (m_x < enemy.getX()+enemy.getW()/2 && m_x > enemy.getX() - enemy.getW() / 2 && m_y < enemy.getY() + enemy.getH() / 2 && m_y > enemy.getY() - enemy.getH() / 2)
+	{
+		enemy - m_damage;
+		m_doing = false;
+		m_acsses = true;
+	}
 }

@@ -18,7 +18,7 @@ int main()
 
     Enemy enemy("enemy", 600, 250, "enemy_1.png", 233, 165);
 
-    Let tree("tree", 500, 500, "let_1.png", 815, 870);
+    Let tree("tree", 500, 500, "let_1.png", 300, 300);
 
     Neutral* soul;
     soul = new Neutral("soul", -500, -500, "let_1.png", 50, 50);
@@ -38,7 +38,7 @@ int main()
         }
 
         player.update(window, time, event);
-        player.attack(window, event, enemy, tree);
+        player.attack(window, event, enemy, tree, time);
         enemy.update(player, time);
         tree.colision(player);
         soul->colision(player);
@@ -47,6 +47,7 @@ int main()
         cam.setCenterCHaracter(player);
         cam.keyMove(time);
         cam.mouseMove(window, time);
+        cam.smth();
 
         window.setView(cam.getView());
         window.clear(sf::Color(24, 145, 75));
@@ -54,6 +55,7 @@ int main()
         window.draw(player.getSprite());
         window.draw(enemy.getSprite());
         window.draw(soul->getSprite());
+        window.draw(player.getBow().getSprite());
         window.display();
     }
 

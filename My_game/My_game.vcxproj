@@ -139,13 +139,11 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\map.cpp" />
     <ClCompile Include="src\player\entity.cpp" />
-    <ClCompile Include="src\player\waepon\waepon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\camera\camera.h" />
     <ClInclude Include="src\map\map.h" />
     <ClInclude Include="src\player\entity.h" />
-    <ClInclude Include="src\player\waepon\waepon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
