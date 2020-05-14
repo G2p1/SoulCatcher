@@ -72,8 +72,15 @@ class Player : public Entity
 	int m_souls;
 	bool m_sword;
 	bool m_bow;
-
+	bool b_trash;
+	sf::Clock tik;
+	sf::Texture sword;
+	sf::Sprite s_sword;
 	Bow m_Bow;
+	sf::Texture midi_hp;
+	sf::Texture low_hp;
+	sf::Texture enseyn;
+	sf::Texture trash;
 
 public:
 	
@@ -83,15 +90,23 @@ public:
 	void update(sf::RenderWindow& window, float time, sf::Event& event);
 	void updateEvent(sf::RenderWindow& window, sf::Event& event);
 	
-	void attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let, float time);
+	void attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, float time);
+	void attack(sf::RenderWindow& window, sf::Event& event, Let& let, float time);
 	void incSouls();
 	Bow getBow();
 	bool getlife();
+	sf::Sprite getSword();
 };
 
 class Enemy : public Entity
 {
+	bool b_trash;
 	bool isDetected;
+	sf::Texture midi_hp;
+	sf::Texture low_hp;
+	sf::Texture enseyn;
+	sf::Texture trash;
+
 	
 public: 
 	Enemy();
@@ -104,6 +119,10 @@ public:
 class Let : public Entity
 {
 
+	sf::Texture midi_hp;
+	sf::Texture low_hp;
+	sf::Texture enseyn;
+	sf::Texture trash;
 public:
 	Let();
 	Let(std::string name, float x, float y, std::string image, int w, int h);

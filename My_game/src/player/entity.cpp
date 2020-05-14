@@ -73,13 +73,7 @@ void Entity::update(sf::RenderWindow& window, float time, sf::Event& event)
 
 	m_sprite.setPosition(m_x, m_y);
 	
-	if (m_health <= 0)
-		m_life = false;
-	if(!m_life)
-	{
-		m_x = -2000000;
-		m_y = -2000000;
-	}
+	
 }
 
 void Entity::updateEvent(sf::RenderWindow& window, sf::Event& event)
@@ -107,7 +101,6 @@ void Entity::updateEvent(sf::RenderWindow& window, sf::Event& event)
 				}
 				
 
-		
 
 		if(m_isSelect)
 			if(event.type == sf::Event::MouseButtonPressed)
@@ -150,20 +143,60 @@ Player::Player(std::string name, float x, float y, std::string image, int w, int
 	, Entity(name, x, y, "src/player/Image/Player/" + image, w , h)
 	
 {
-
+	sword.loadFromFile("src/player/Image/Player/player.png");
+	s_sword.setTexture(sword);
+	s_sword.setTextureRect(sf::IntRect(0, 0, 100, 100));
+	s_sword.setOrigin(50, 50);
+	s_sword.setPosition(-2000000, -200000);
+	midi_hp.loadFromFile("src/player/Image/Player/player_2.png");
+	low_hp.loadFromFile("src/player/Image/Player/player_3.png");
+	enseyn.loadFromFile("src/player/Image/Player/player_4.png");
+	trash.loadFromFile("src/player/Image/Player/player_5.png");
 }
 
 void Player::update(sf::RenderWindow& window, float time, sf::Event& event) 
 {
+	if(b_trash)
 	Entity::update(window, time, event);
 	updateEvent(window, event);
+	float timer = tik.getElapsedTime().asSeconds();
+	if (timer > 0.2) 
+	{
+		s_sword.setPosition(-2000, -2000);
+		tik.restart();
+	}
 
-	//m_Sword.setCoord(m_x, m_y);
+	if(m_tempX>m_x)
+		m_sprite.setScale(1, 1);
+	if(m_tempX < m_x)
+		m_sprite.setScale(-1, 1);
+
+	if (m_health <= 80)
+		m_sprite.setTexture(midi_hp);
+	if (m_health <= 60)
+		m_sprite.setTexture(low_hp);
+	if (m_health <= 40)
+		m_sprite.setTexture(enseyn);
+	if (m_health <= 20)
+	{
+		b_trash = false;
+		m_sprite.setTexture(trash);
+	}
+	if (m_health <= 0)
+		m_life = false;
+	if (!m_life)
+	{
+		m_x = -2000000;
+		m_y = -2000000;
+	}
 }
 
 void Player::updateEvent(sf::RenderWindow& window, sf::Event& event)
 {
-	
+	m_sprite.setTexture(m_texture);
+	//m_sprite.setTextureRect(sf::IntRect(0, 0, m_w, m_h));
+	m_sprite.setOrigin(m_w / 2, m_h / 2);
+	m_sprite.setPosition(m_x, m_y);
 
 	if (m_life) {
 		
@@ -184,7 +217,7 @@ void Player::updateEvent(sf::RenderWindow& window, sf::Event& event)
 
 }
 
-void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Let& let, float time)
+void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, float time)
 {
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
 	sf::Vector2f pos = window.mapPixelToCoords(pixelPos);
@@ -198,24 +231,39 @@ void Player::attack(sf::RenderWindow& window, sf::Event& event, Enemy& enemy, Le
 			if(isAttack)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				float enemy_distance = sqrt((enemy.getX() - m_x) * (enemy.getX() - m_x) + (enemy.getY() - m_y) * (enemy.getY() - m_y));
-				float let_distance = sqrt((let.getX() - m_x) * (let.getX() - m_x) + (let.getY() - m_y) * (let.getY() - m_y));
 
-				if (enemy_distance- enemy.getH()/2 <= 400)
+
+				
+
+				s_sword.setPosition(m_x, m_y);
+				if (enemy_distance- enemy.getH()/2 <= 100)
 					enemy - 20;
-				if (let_distance - let.getH()/2 <= 400)
-					let - 20;
-				isAttack = false;
+				
 			}
-	}
-	float timer = clock.getElapsedTime().asSeconds();
-	if (timer > 2.5)
-	{
-		timer = 0;
-		clock.restart();
-		isAttack = true;
-	}
-}
 
+		//s_sword.setPosition(-2000000, -200000);
+			
+	}
+	
+}
+void Player::attack(sf::RenderWindow& window, sf::Event& event, Let& let, float time)
+{
+	
+		if (m_sword)
+			if (isAttack)
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+					
+					float let_distance = sqrt((let.getX() - m_x) * (let.getX() - m_x) + (let.getY() - m_y) * (let.getY() - m_y));
+					if (let_distance - let.getH() / 2 <= 100)
+						let - 20;
+				}
+	
+	
+}
+sf::Sprite Player::getSword()
+{
+	return s_sword;
+}
 void Player::incSouls()
 {
 	m_souls++;
@@ -231,10 +279,14 @@ bool Player::getlife()
 	return m_life;
 }
 //class Enemy
-Enemy::Enemy() 
+Enemy::Enemy()
 	: Entity("enemy", 800, 350, "src/player/Image/Enemy/enemy_1.png", 107, 74)
+	, b_trash(true)
 {
-
+	midi_hp.loadFromFile("src/player/Image/Enemy/enemy_2.png");
+	low_hp.loadFromFile("src/player/Image/Enemy/enemy_3.png");
+	enseyn.loadFromFile("src/player/Image/Enemy/enemy_4.png");
+	trash.loadFromFile("src/player/Image/Enemy/enemy_5.png");
 }
 
 Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h)
@@ -247,6 +299,7 @@ Enemy::Enemy(std::string name, float x, float y, std::string image, int w, int h
 
 void Enemy::update(Player& player, float time)
 {
+	
 	colision(player, isAttack);
 
 	float timer = clock.getElapsedTime().asSeconds();
@@ -260,13 +313,30 @@ void Enemy::update(Player& player, float time)
 	m_tempX = player.getX();
 	m_tempY = player.getY();
 	
-
-	float distance = sqrt((player.getX() - m_x)* (player.getX() - m_x) + (player.getY() - m_y)* (player.getY() - m_y));
-	if (distance < 1000)
+	if (m_health <= 80)
+		m_sprite.setTexture(midi_hp);
+	if (m_health <= 60)
+		m_sprite.setTexture(low_hp);
+	if (m_health <= 40)
+		m_sprite.setTexture(enseyn);
+	if (m_health <= 20)
 	{
-		isDetected = true;
-		m_x += 0.05 * time * (m_tempX - m_x) / distance;
-		m_y += 0.05 * time * (m_tempY - m_y) / distance;
+		b_trash = false;
+		m_sprite.setTexture(trash);
+	}
+	if (b_trash)
+	{
+		float distance = sqrt((player.getX() - m_x) * (player.getX() - m_x) + (player.getY() - m_y) * (player.getY() - m_y));
+		if (distance < 300)
+		{
+			isDetected = true;
+			m_x += 0.05 * time * (m_tempX - m_x) / distance;
+			m_y += 0.05 * time * (m_tempY - m_y) / distance;
+		}
+		if (m_tempX > m_x)
+			m_sprite.setScale(-1, 1);
+		if (m_tempX < m_x)
+			m_sprite.setScale(1, 1);
 	}
 
 	m_sprite.setPosition(m_x, m_y);
@@ -373,7 +443,10 @@ void Enemy::colision(Player& player, bool& attack)
 Let::Let() 
 	:Entity("tree", 500, 500, "src/player/Image/Let/shkaph.png", 44, 69)
 {
-
+	midi_hp.loadFromFile("src/player/Image/Let/shkaph_2.png");
+	low_hp.loadFromFile("src/player/Image/Let/shkaph_3.png");
+	enseyn.loadFromFile("src/player/Image/Let/shkaph_4.png");
+	trash.loadFromFile("src/player/Image/Let/shkaph_5.png");
 }
 
 Let::Let(std::string name, float x, float y, std::string image, int w, int h)
@@ -389,6 +462,15 @@ sf::Sprite Let::getSprite()
 }
 void Let::colision(Player& player)
 {
+	if (m_health <= 80)
+		m_sprite.setTexture(midi_hp);
+	if (m_health <= 60)
+		m_sprite.setTexture(low_hp);
+	if (m_health <= 40)
+		m_sprite.setTexture(enseyn);
+	if (m_health <= 20)
+		m_sprite.setTexture(trash);
+
 	if (
 		player.getX() + (player.getW() / 2) >= m_x - (m_w / 2)
 		&&
@@ -462,7 +544,7 @@ void Let::colision(Player& player)
 
 	m_sprite.setPosition(m_x, m_y);
 
-	if (m_health < 0)
+	if (m_health <= 0)
 		m_life = false;
 	if (!m_life)
 	{

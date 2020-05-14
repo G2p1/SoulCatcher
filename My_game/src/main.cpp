@@ -14,9 +14,12 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML window", sf::Style::Fullscreen);
 
-    sf::Clock clock;
+    sf::Clock clock, timer;
     float time;
+    float locale_timer;
    
+    bool attack_time = true;
+
     Camera cam;
     Map map;
 
@@ -26,19 +29,19 @@ int main()
     
     for (int i = 0; i < enemys.size(); i++)
     {
-        float x = rand() % (30 * 31) + 2;
-        float y = rand() % (40 * 31) + 2;
+        float x = rand() % (45 * 31) + 1;
+        float y = rand() % (39 * 31) + 1;
         enemys[i].setCoordinates(x, y);
     }
     
     Enemy enemy("enemy", 800, 350, "enemy_1.png", 107, 74);
 
-    std::array<Let, 4> shaphs;
+    std::array<Let, 15> shaphs;
 
     for (int i = 0; i < shaphs.size(); i++)
     {
-        float x = rand() % (30 * 31) + 2;
-        float y = rand() % (40 * 31) + 2;
+        float x = rand() % (45 * 31) + 1;
+        float y = rand() % (39 * 31) + 1;
         shaphs[i].setCoordinates(x, y);
     }
     Let tree("tree", 500, 500, "shkaph.png", 44, 69);
@@ -47,14 +50,21 @@ int main()
 
     for (int i = 0; i < souls.size(); i++)
     {
-        float x = rand() % (30 * 31) + 2;
-        float y = rand() % (40 * 31) + 2;
+        float x = rand() % (45 * 31) + 1;
+        float y = rand() % (39 * 31) + 1;
         souls[i].setCoordinates(x, y);
     }
    
 
     while (window.isOpen())
     {
+        locale_timer = timer.getElapsedTime().asSeconds();
+        if (locale_timer > 2)
+        {
+            attack_time = true;
+            timer.restart();
+
+        }
 
         time = clock.getElapsedTime().asMicroseconds();
         time /= 800;
@@ -70,16 +80,28 @@ int main()
         for (int i = 0; i < enemys.size(); i++)
         {
             enemys[i].update(player, time);
+        }
+        if (attack_time)
+        {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                attack_time = false;
+            }
+            for(int i = 0; i < enemys.size();i++)
+                player.attack(window, event, enemys[i], time);
 
+            for(int i = 0; i < shaphs.size();i++)
+                player.attack(window, event, shaphs[i], time);
+
+            player.getSword().setPosition(player.getX(), player.getY());
+            
         }
 
         for (int i = 0; i < enemys.size(); i++)
             for(int j = 0; j < shaphs.size();j++)
         {
             shaphs[j].colision(enemys[i]);
-
-            player.attack(window, event, enemys[i], shaphs[j], time);
-        }
+          }
         
         for (int i = 0; i < shaphs.size(); i++)
         {
@@ -120,6 +142,7 @@ int main()
         {
             window.draw(souls[i].getSprite());
         }
+        window.draw(player.getSword());
         window.draw(player.getBow().getSprite());
 
         window.display();
