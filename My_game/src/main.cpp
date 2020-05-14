@@ -11,8 +11,9 @@
 int main()
 {
     srand(time(0));
-
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML window", sf::Style::Fullscreen);
+
+   
 
     sf::Clock clock, timer;
     float time;
@@ -58,6 +59,7 @@ int main()
 
     while (window.isOpen())
     {
+        
         locale_timer = timer.getElapsedTime().asSeconds();
         if (locale_timer > 2)
         {
@@ -69,11 +71,14 @@ int main()
         time = clock.getElapsedTime().asMicroseconds();
         time /= 800;
         clock.restart();
+        
         sf::Event event;
+
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+           
         }
 
         player.update(window, time, event);
@@ -122,7 +127,6 @@ int main()
         cam.setCenterCHaracter(player);
         cam.keyMove(time);
         cam.mouseMove(window, time);
-        
 
         window.setView(cam.getView());
         window.clear(sf::Color(128, 106, 89));
@@ -145,7 +149,22 @@ int main()
         window.draw(player.getSword());
         window.draw(player.getBow().getSprite());
 
+        window.draw(cam.getSprite(0));
+        window.draw(cam.getSprite(1));
+
+        window.draw(cam.getText(0));
+        window.draw(cam.getText(1));
+           
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+
+                cam.menu(window, clock, event);
+
+            }
+
         window.display();
+
+        cam.died(player, window,clock);
     }
 
 }

@@ -13,13 +13,13 @@ D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(30,44): warning C
           ]
 D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(69,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
 D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(70,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(333,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(334,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(650,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(659,19): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(660,20): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(679,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(680,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(841,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(842,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(345,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(346,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(662,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(671,19): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(672,20): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(691,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(692,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(853,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(854,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
   My_game.vcxproj -> D:\Work\Programming\Game\My_game\Debug\My_game.exe

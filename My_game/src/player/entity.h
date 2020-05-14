@@ -96,6 +96,8 @@ public:
 	Bow getBow();
 	bool getlife();
 	sf::Sprite getSword();
+	int getSoul();
+	int getHealth();
 };
 
 class Enemy : public Entity

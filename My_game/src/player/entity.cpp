@@ -156,6 +156,8 @@ Player::Player(std::string name, float x, float y, std::string image, int w, int
 
 void Player::update(sf::RenderWindow& window, float time, sf::Event& event) 
 {
+
+
 	if(b_trash)
 	Entity::update(window, time, event);
 	updateEvent(window, event);
@@ -278,6 +280,16 @@ bool Player::getlife()
 {
 	return m_life;
 }
+
+int Player::getSoul()
+{
+	return m_souls;
+}
+int Player::getHealth()
+{
+	return m_health;
+}
+
 //class Enemy
 Enemy::Enemy()
 	: Entity("enemy", 800, 350, "src/player/Image/Enemy/enemy_1.png", 107, 74)
