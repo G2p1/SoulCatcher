@@ -1,8 +1,8 @@
 #include"map.h"
-
+const std::string m_base_dir = "src/map/Images/";
 Map::Map()
 {
-	t_floor.loadFromFile("src/map/Images/map.png");
+	t_floor.loadFromFile(m_base_dir + "map.png");
 	s_floor.setTexture(t_floor);
 	s_floor.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
@@ -12,7 +12,7 @@ Map::Map()
 	s_locker.setTexture(t_floor);
 	s_locker.setTextureRect(sf::IntRect(32, 0, 32, 32));
 }
-
+//Рисування частин карти
 void Map::update(sf::RenderWindow& window)
 {
 	for (int i = 0; i < HEIGHT_MAP; i++) {
@@ -36,6 +36,7 @@ void Map::update(sf::RenderWindow& window)
 		}
 	}
 }
+//перетин карти з гравцем
 void Map::colision(Player& player)
 {if(player.getlife())
 	for (int i = (player.getX()- player.getW() / 2) / 32; i < (player.getX() + player.getW()/2) / 32; i++) {
@@ -57,7 +58,7 @@ void Map::colision(Player& player)
 	}
 
 }
-
+//перетин карти з душою
 void Map::colision(Neutral& player)
 {
 	if (player.getlife())

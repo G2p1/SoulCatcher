@@ -60,8 +60,11 @@ class Map
 		"2222222222222222222222222222222222222222",
     };
     public:
+		//Конструктор
 		Map();
+		//функція для рисування карти
        void update(sf::RenderWindow& window);
-       void colision(Player& player);
+       //Функції для иявлення колізій і непрохідности гравця та душ
+	   void colision(Player& player);
 	   void colision(Neutral& player);
  };
