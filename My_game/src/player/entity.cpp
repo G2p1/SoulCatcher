@@ -211,9 +211,15 @@ void Player::update(sf::RenderWindow& window, float time, sf::Event& event)
 		b_trash = false;
 		m_sprite.setTexture(trash);
 	}
+	else
+		b_trash = true;
 	//«никненн€ гравц€ при смерт≥
 	if (m_health <= 0)
 		m_life = false;
+	else
+	{
+		m_life = true;
+	}
 	if (!m_life)
 	{
 		m_x = -2000000;

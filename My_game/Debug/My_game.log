@@ -1,45 +1,23 @@
-﻿  cmaera.cpp
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(85,19): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(90,19): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(95,24): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(100,22): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(130,47): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(131,22): warning C4018: >: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(131,67): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(132,22): warning C4018: >: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(132,70): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(133,50): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(324,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(326,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(328,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(343,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(345,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(347,20): warning C4018: <: несоответствие типов со знаком и без знака
-  entity.cpp
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(27,9): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(31,9): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(37,49): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
-          with
-          [
-              T=int
-          ]
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(37,44): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
-          with
-          [
-              T=int
-          ]
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(101,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(102,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(404,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(405,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(733,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(742,19): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(743,20): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(762,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(763,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(926,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-D:\Work\Programming\Game\My_game\My_game\src\player\entity.cpp(927,51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-  Создание кода...
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(149): warning C4715: Camera::getText: значение возвращается не при всех путях выполнения
-D:\Work\Programming\Game\My_game\My_game\src\camera\cmaera.cpp(142): warning C4715: Camera::getSprite: значение возвращается не при всех путях выполнения
+﻿  main.cpp
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(26,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(46,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(48,17): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(49,17): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(56,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(58,17): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(59,17): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(66,23): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(68,17): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(69,17): warning C4244: инициализация: преобразование "int" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(89,53): warning C4244: =: преобразование "sf::Int64" в "float", возможна потеря данных
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(104,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(115,31): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(118,31): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(125,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(126,31): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(131,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(137,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(159,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(165,27): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Work\Programming\Game\My_game\My_game\src\main.cpp(170,27): warning C4018: <: несоответствие типов со знаком и без знака
   My_game.vcxproj -> D:\Work\Programming\Game\My_game\Debug\My_game.exe

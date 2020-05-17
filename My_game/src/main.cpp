@@ -70,7 +70,10 @@ bool game()
         souls[i].setCoordinates(x, y);
     }
     sf::Event event;
-    cam.begin(window, clock, event, player, shaphs, enemys, souls);
+   
+   
+        cam.begin(window, clock, event, player, shaphs, enemys, souls);
+     
     //Головний цикл який працює поки вікно відкрите
     while (window.isOpen())
     {
